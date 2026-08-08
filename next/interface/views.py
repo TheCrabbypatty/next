@@ -2,5 +2,5 @@ from django.shortcuts import render
 
 # Create your views here.
 
-def login_view():
-    return render()
+def login_view(request):
+    return render(request, "interface/index.html")
