@@ -1,5 +1,64 @@
 {% extends "interface/layout.html" %}
 
 {% block body %}
-<p>Test</p>
+
+<div class="glass fade-in mb-4">
+    <h1 class="mb-4">Your Dashboard</h1>
+
+    <!-- Add Task Form -->
+    <div class="glass mb-4">
+        <div class="card-body">
+            <h4>Add a Task</h4>
+            <form method="POST" action="{% url 'add_task' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Task Name</label>
+                    <input type="text" class="form-control" name="task_name">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Estimated Time (minutes)</label>
+                    <input type="number" class="form-control" name="task_time">
+                </div>
+
+                <button class="btn btn-primary">Add Task</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Task List -->
+    <div class="glass mb-4">
+        <h3>Your Tasks</h3>
+
+        <div class="row">
+          {% for task in tasks %}
+            <div class="col-md-4 mb-3">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title">{{ task.name }}</h5>
+                  <p class="card-text">
+                    Estimated time: {{ task.estimated_time }} minutes
+                  </p>
+                  <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+              </div>
+            </div>
+          {% empty %}
+            <p>No tasks yet.</p>
+          {% endfor %}
+        </div>
+    </div>
+
+    <button id="nextTaskBtn" class="btn btn-success">Get Next Task</button>
+</div>
+
+<script>
+document.getElementById("nextTaskBtn").addEventListener("click", function() {
+    this.innerHTML = "Thinking...";
+    this.disabled = true;
+    window.location.href = "{% url 'next_task' %}";
+});
+</script>
+
 {% endblock %}
+

@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -130,4 +134,8 @@ MAILERS = {
 # Login URLs
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/login/'
+LOGOUT_URL = "/logout/"
+LOGOUT_REDIRECT_URL = "/login/"
+
+#Openrouter API Key
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
