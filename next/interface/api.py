@@ -27,7 +27,7 @@ def get_next_task_from_ai(tasks):
             "X-Title": "Next Task App"
         },
         json={
-            "model": "openrouter/auto",
+            "model": "openrouter/free",
             "messages": [
                 {"role": "user", "content": prompt}
             ]
