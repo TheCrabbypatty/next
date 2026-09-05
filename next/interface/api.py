@@ -19,18 +19,13 @@ def get_next_task_from_ai(tasks):
     )
 
     response = requests.post(
-        "https://openrouter.ai/api/v1/chat/completions",
-        headers={
-            "Authorization": f"Bearer {settings.OPENROUTER_API_KEY}",
-            "Content-Type": "application/json",
-            "HTTP-Referer": "http://localhost:8000",
-            "X-Title": "Next Task App"
-        },
+        "http://localhost:11434/api/chat",
         json={
-            "model": "openrouter/free",
+            "model": "llama3.1:8b",
             "messages": [
                 {"role": "user", "content": prompt}
-            ]
+            ],
+            "stream": False
         }
     )
 
@@ -39,8 +34,6 @@ def get_next_task_from_ai(tasks):
 
     try:
         data = response.json()
-        return data["choices"][0]["message"]["content"]
+        return data["message"]["content"].strip()
     except Exception:
         return "Could not determine the next task."
-
-
